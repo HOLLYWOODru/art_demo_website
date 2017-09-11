@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+{% load list_from_objects %}
+{% load random_number %}
+
+{% block head %}
+
+    <title>{{ work.name }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/gallery.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' with hierarhy_menu_support='no' %}
+
+    <div id="wrap">
+
+        <div id="wrap-inner">
+            <div id="content" class="group">
+
+                <div id="work-title-section" class="full title">
+                    <div class="single-title group">
+                        <a class="url" href="{% url 'core.artist' username=work.artist.username %}">
+                            <div>
+                                <img class="photo" alt="null" src="{{ work.artist.avatar_url }}">
+                            </div>
+                        </a>
+                        <h1>{{ work.name }}</h1>
+                        <div class="work-details-line">
+                            <div class="attribution">
+                                <span class="username-byline-user">
+                                    художник:
+                                    <a class="url" href="{% url 'core.artist' username=work.artist.username %}">
+                                        {{ work.artist.username }}
+                                    </a>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="work-detail-main">
+                    <div class="the-work" onclick=showGalleryOverlay()>
+                        <img alt="{{ work.name }}" src="{{ work.thumbnail_url }}">
+                    </div>
+                    <div class="work-details-meta">
+                        <div class="work-categories">
+                            {% ifnotequal work.form_of_art 0 %}
+                                <div class="work-category">
+                                    <span class="category-name">вид искусства: </span>
+                                    <span class="category-value form-value">{{ work.get_form_of_art_display }}</span>
+                                </div>
+                            {% endifnotequal %}
+
+                            {% ifnotequal work.genre_of_art 0 %}
+                                <div class="work-category">
+                                    <span class="category-name">жанр: </span>
+                                    <span class="category-value genre-value">{{ work.get_genre_of_art_display }}</span>
+                                </div>
+                            {% endifnotequal %}
+
+                            {% ifnotequal work.technique_of_art 0 %}
+                                <div class="work-category">
+                                    <span class="category-name">техника: </span>
+                                    <span class="category-value technique-value">{{ work.get_technique_of_art_display }}</span>
+                                </div>
+                            {% endifnotequal %}
+
+                            {% ifnotequal work.style_of_art 0 %}
+                                <div class="work-category">
+                                    <span class="category-name">направление: </span>
+                                    <span class="category-value style-value">{{ work.get_style_of_art_display }}</span>
+                                </div>
+                            {% endifnotequal %}
+                        </div>
+                        <div class="work-tools">
+                            <div class="work-tool work-tool-first">
+                                <span class="work-tool-name">понравилось: </span>
+                                <span class="work-tool-value">{{ 0|get_random_number:99 }}</span>
+                            </div>
+                            <div class="work-tool">
+                                <span class="work-tool-name">художников оценило: </span>
+                                <span class="work-tool-value">{{ 0|get_random_number:99 }}</span>
+                            </div>
+                            <div class="work-tool">
+                                <span class="work-tool-name">просмотров: </span>
+                                <span class="work-tool-value">{{ 0|get_random_number:99 }}</span>
+                            </div>
+                            <div class="work-tool">
+                                <span class="work-tool-name">комментариев: </span>
+                                <span class="work-tool-value">{{ 0|get_random_number:99 }}</span>
+                            </div>
+                        </div>
+                        {% ifnotequal work.tags.all|length 0 %}
+                            <div class="work-tags">
+                                <h3>Метки:</h3>
+                                {% for tag in work.tags.all %}
+                                    <span class="work-tag">
+                                        {{ tag.name }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        {% endifnotequal %}
+                    </div>
+                    {% ifnotequal work.information '' %}
+                        <div class="work-information">
+                            {{ work.information|safe }}
+                        </div>
+                    {% endifnotequal %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <div id="gallery_overlay" class="Modal absoluteCenter show" style="visibility: hidden;">
+        <div class="modalMask dark"></div>
+        <div class="modalContainer">
+            <div id="rg-gallery" class="rg-gallery">
+                <div class="rg-image-wrapper wrapper-full">
+                    <div class="rg-image rg-image-full">
+                        <img class="img-full" src="{{ work.image_url }}">
+                    </div>
+                </div>
+                <div class="gallery-close-button" onclick="hideGalleryOverlay()"></div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    function showGalleryOverlay() {
+
+        if(document.getElementById('gallery_overlay').style.visibility=='hidden') {
+
+            document.body.className += document.body.className ? ' noScroll' : 'noScroll';
+
+            document.getElementById('gallery_overlay').style.visibility='visible';
+            document.getElementById('gallery_overlay').style.opacity=1;
+        }
+    }
+
+    function hideGalleryOverlay() {
+        if(document.getElementById('gallery_overlay').style.visibility=='visible') {
+
+            document.getElementById('gallery_overlay').style.opacity=0;
+
+            setTimeout(function() {
+                document.body.className = document.body.className.replace(/noScroll/,'');
+                document.getElementById('gallery_overlay').style.visibility='hidden';
+
+            }, 200);
+        }
+    }
+</script>
+
+{% endblock %}

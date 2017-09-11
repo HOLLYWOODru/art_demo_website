@@ -1,0 +1,54 @@
+{% load random_number %}
+
+<li class="group">
+    <div class="work-area">
+        <div class="work-title">
+            <div>
+                <h2>
+                    <a class="url" href="{% url 'art.work' pk=work.pk %}">
+                        {{ work.name }}
+                    </a>
+                </h2>
+            </div>
+        </div>
+        <div class="work">
+            <div class="work-img" onclick=showGalleryOverlay('{{ work.id }}')>
+                <a class="work-link">
+                    <span class="helper"></span>
+                    <img src="{{ work.thumbnail_url }}">
+                </a>
+                <a class="work-over">
+                    <div class="view-image">
+                    </div>
+                </a>
+            </div>
+            <ul class="tools group" style="visibility: visible;">
+                <li class="likes"><a>{{ 0|get_random_number:99 }}</a></li>
+                <li class="artists_likes"><a>{{ 0|get_random_number:99 }}</a></li>
+                <li class="views"><a>{{ 0|get_random_number:999 }}</a></li>
+                <li class="comments"><a>{{ 0|get_random_number:99 }}</a></li>
+            </ul>
+        </div>
+    </div>
+    {% if not without_artist_block %}
+        <div class="work-artist">
+            <div class="artist-name">
+                <h2>
+                    <a class="url" href="{% url 'core.artist_works' work.artist.username %}">
+                        <img class="photo" src="{{ work.artist.avatar_url }}">
+                        <p>{{ work.artist.username }}</p>
+                    </a>
+                </h2>
+            </div>
+            {% if work.artist.article %}
+                <a class="url" href="{% url 'articles.detail' pk=work.artist.article.pk %}">
+                    <div class="artifex_rotated_logo">
+                        <div class="popup_article_info">
+                            <h4>У нас есть отличная статья про этого художника! Обязательно прочтите!</h4>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</li>

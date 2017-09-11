@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>{{ artists_list|length }} личностей</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' %}
+
+    <div class="black-menu-area"></div>
+
+        <div id="wrap">
+
+            {% include 'sub_menu.html' with submenu_items=site_architecture.artists_menu %}
+
+            <div id="wrap-inner">
+                <div id="content" class="group">
+                    <div id="main" class="main-full">
+
+                        {% if artists_list|length == 0 %}
+
+                            <p class="no-content">Пока не добавлено ни одной личности</p>
+
+                        {% else %}
+
+                            <ol class="artists group">
+
+                                {% for artist in artists_list %}
+
+                                    {% include 'core/artist_element.html' %}
+
+                                {% endfor %}
+                            </ol>
+
+                        {% endif %}
+
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+    {% include 'footer.html' %}
+
+{% endblock %}

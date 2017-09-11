@@ -1,0 +1,21 @@
+<article class="event">
+    <div class="event-thumbnail">
+        <a class="event-link" href="{% url 'events.detail' pk=event.pk %}">
+            <img src="{{ event.image_url }}">
+        </a>
+    </div>
+    <div class="event-details">
+        <div class="event-title">
+            <a class="event-link" href="{% url 'events.detail' pk=event.pk %}">
+                {{ event.name }}
+            </a>
+        </div>
+        <div class="event-content">
+            {{ event.short_information|safe }}
+        </div>
+        <ul class="event-tools group" style="visibility: visible;">
+                <li class="time"><span>{{ event.start_time }} - {{ event.end_time }}</span></li>
+                <li class="geo"><span>{{ event.place }}</span></li>
+            </ul>
+    </div>
+</article>

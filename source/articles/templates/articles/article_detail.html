@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>{{ article.name }}</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' with hierarhy_menu_support='no' %}
+
+    <div class="black-menu-area"></div>
+
+    <div id="wrap">
+
+        {% include 'sub_menu.html' with submenu_items=site_architecture.articles_menu %}
+
+        {% if article.artist %}
+            <div class="artist-in-article-container" id="artifex_artist_popup">
+                <a href="{% url 'core.artist_works' username=article.artist.username %}">
+                    <h3>Этот художник зарегистрирован на Artifex</h3>
+                    <h5>Спешите посмотреть его работы!</h5>
+                    <div>
+                        <img width="100px" height="100px" class="photo" src="{{ article.artist.avatar_url }}">
+                    </div>
+                    <h2>{{ article.artist.first_name }} {{ article.artist.last_name }}</h2>
+                    <h4>{{ article.artist.works.count }} работ</h4>
+                </a>
+            </div>
+        {% endif %}
+
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+
+                    <span class="news-span-container html-container">
+                        {{ article.html|safe }}
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+{% endblock %}

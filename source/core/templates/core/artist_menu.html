@@ -1,0 +1,21 @@
+{% load activeurl %}
+
+<div class="profile-dash group">
+    <div class="profile-dash-inner">
+        {% activeurl %}
+        <ul class="profile-menu">
+            <li>
+                <a href="{% url 'core.artist_works' username=artist.username %}">{{ artist.works.count }} работ</a>
+            </li>
+            <li>
+                <a href="{% url 'core.artist_about' username=artist.username %}">Об авторе</a>
+            </li>
+            {% if artist.article %}
+            <li class="artifex_article_link">
+                <a href="{% url 'articles.detail' pk=artist.article.pk %}">Читать статью на Artifex</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endactiveurl %}
+    </div>
+</div>

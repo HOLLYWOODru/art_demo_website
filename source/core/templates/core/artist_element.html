@@ -1,0 +1,24 @@
+{% load artist_works_filter %}
+
+<li class="group">
+    <div class="artist-area">
+        <div class="artist">
+            <a href="{% url 'core.artist_works' username=artist.username %}">
+                <div class="artist-meta">
+                    <h2>
+                        <img class="photo" src="{{ artist.avatar_url }}">
+                        <p class="name">{{ artist.username }}</p>
+                        <p class="works-count">{{ artist.works.count }} работ</p>
+                    </h2>
+                </div>
+                <div class="artist-works">
+                    {% for i in 3|get_range:artist.works.count %}
+
+                        <img src={{ i|get_image_url:artist.works.all }}>
+
+                    {% endfor %}
+                </div>
+            </a>
+        </div>
+    </div>
+</li>

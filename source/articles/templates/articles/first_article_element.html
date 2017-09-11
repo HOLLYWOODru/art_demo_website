@@ -1,0 +1,34 @@
+<article class="post type-post first">
+    <div class="post-thumbnail">
+        <a class="post-link" href="{% url 'articles.detail' pk=first_article.pk %}">
+            <img src="{{ first_article.image_url }}">
+        </a>
+    </div>
+    <header class="entry-header">
+        <span class="fancydate">
+            <span class="day">
+                {% if first_article.creation_date.day < 10 %}
+                    0{{ first_article.creation_date.day }}
+                {% else %}
+                    {{ first_article.creation_date.day }}
+                {% endif %}
+            </span>
+            <span>
+                {% if first_article.creation_date.month < 10 %}
+                    0{{ first_article.creation_date.month }}
+                {% else %}
+                    {{ first_article.creation_date.month }}
+                {% endif %}
+            </span>
+            <span>{{ first_article.creation_date.year }}</span>
+        </span>
+        <h2 class="entry-title">
+           <a class="post-link" href="{% url 'articles.detail' pk=first_article.pk %}">
+                {{ first_article.name }}
+           </a>
+        </h2>
+    </header>
+    <div class="entry-content">
+        {{ first_article.short_information|safe }}
+    </div>
+</article>

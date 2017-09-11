@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>Artifex - Расскажите о себе</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' %}
+
+    <div class="black-menu-area"></div>
+
+    <div id="wrap">
+
+        {% include 'sub_menu.html' with submenu_items=site_architecture.user_account_menu hierarhy_menu_support='no' %}
+
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+
+                    <div class="profile_block">
+                        <div class="profile_block_inner">
+
+                            <form class="form_about" action="{% url 'user.account.about' %}" method="post">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    <div class="form-field">
+                                        <fieldset class="form-fieldset">
+
+                                            {{ field.errors }}
+
+                                            <label class="label_for_textarea" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                                            {{ field }}
+
+                                        </fieldset>
+                                        <p class="help_message">
+                                            {{ field.help_text }}
+                                        </p>
+                                    </div>
+                                {% endfor %}
+                                <div class="form-buttons">
+
+                                    <input type="submit" name="submit" class="button_update_profile" value="Обновить информацию">
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+{% endblock %}

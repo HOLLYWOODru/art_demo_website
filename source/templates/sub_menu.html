@@ -1,0 +1,22 @@
+{% load activeurl %}
+{% load assign_variable %}
+
+{% if not hierarhy_menu_support %}
+    {% assign hierarhy_menu_support 'yes' %}
+{% endif %}
+
+<div class="profile-dash group">
+    <div class="profile-dash-inner">
+        {% activeurl menu=hierarhy_menu_support %}
+        <ul class="profile-menu">
+            {% for item in submenu_items %}
+
+                <li>
+                    <a href="{% url item.route_name %}">{{ item.title }}</a>
+                </li>
+
+            {% endfor %}
+        </ul>
+        {% endactiveurl %}
+    </div>
+</div>

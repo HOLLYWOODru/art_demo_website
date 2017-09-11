@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>{{ articles|length }} новостей</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' %}
+
+    <div class="black-menu-area"></div>
+
+    <div id="wrap">
+
+        {% include 'sub_menu.html' with submenu_items=site_architecture.articles_menu hierarhy_menu_support='no' %}
+
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+                    <span class="news-span-container">
+
+                    {% if articles|length == 0 %}
+
+                        <p class="no-content">Пока нет ни одной новости</p>
+
+                    {% else %}
+
+                            {% with articles|first as first_article %}
+
+                                {% include 'articles/first_article_element.html' %}
+
+                            {% endwith %}
+
+                            {% if articles|length > 1 %}
+
+                                <div class="site-main-2col">
+
+                                    {% for article in articles %}
+
+                                        {% if forloop.counter != 1 %}
+
+                                            {% include 'articles/article_element.html' %}
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endif %}
+
+                    {% endif %}
+
+                    </span>
+
+                    {% if is_paginated %}
+
+                        {% include 'pagination_controls.html' %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+{% endblock %}

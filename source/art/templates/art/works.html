@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>{{ works|length }} работ</title>
+
+    {% include 'gallery_head.html' %}
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' %}
+
+    <div id="wrap">
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+
+                    {% if works|length == 0 %}
+
+                        <p class="no-content">Ни одной работы не найдено<p>
+
+                    {% else %}
+
+                        <ol class="works group">
+
+                            {% for work in works %}
+                                {% include 'art/work_element.html' %}
+                            {% endfor %}
+
+                        </ol>
+
+                    {% endif %}
+
+                    {% if is_paginated %}
+
+                        {% include 'pagination_controls.html' %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    {% include 'gallery_body.html' with works=works %}
+
+{% endblock %}

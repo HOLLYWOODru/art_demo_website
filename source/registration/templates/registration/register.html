@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>Регистрация</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' %}
+
+    <div id="wrap">
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+                    <div class="login_block">
+                        <div class="login_block_inner">
+                            <div class="artifex_logo"></div>
+                            <h2 class="alt">
+                                Artifex.ru - простой и удобный способ создать портфолио со своими работами
+                            </h2>
+                            <h3 class="sub">
+                                Если вы - художник, скульптор или просто человек искусства, у которого есть работы, которыми хочется поделиться с другими, то вам определенно сюда.
+                                Зарегистрировавшись на artifex.ru, вы получите возможность быстро и легко публиковать свои работы, создавая тем самым портфолио, которое будет доступно всем, кому вы дадите ссылку.
+                            </h3>
+                            <form class="form_signup" action="{% url 'registration.signup' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-field">
+                                    <fieldset class="form-fieldset">
+
+                                        {{ form.email.errors }}
+
+                                        <label class="label_for_input" for="{{ form.email.id_for_label }}">Email:</label>
+
+                                        {{ form.email }}
+
+                                    </fieldset>
+                                    <p class="help_message">
+                                        На указанный email будет выслана ссылка, активирующая ваш аккаунт
+                                    </p>
+                                </div>
+                                <div class="form-field">
+                                    <fieldset class="form-fieldset">
+
+                                        {{ form.username.errors }}
+
+                                        <label class="label_for_input" for="{{ form.username.id_for_label }}">Псевдоним:</label>
+
+                                        {{ form.username }}
+                                    </fieldset>
+                                    <p class="help_message">
+                                        Псевдоним должен быть уникальным. Ссылка на ваше портфолио будет выглядеть http://artifex.ru/псевдоним
+                                    </p>
+                                </div>
+                                <div class="form-field">
+                                    <fieldset class="form-fieldset">
+
+                                        {{ form.password1.errors }}
+
+                                        <label class="label_for_input" for="{{ form.password1.id_for_label }}">Пароль:</label>
+
+                                        {{ form.password1 }}
+
+                                    </fieldset>
+                                    <p class="help_message">
+                                        Минимум 6 символов
+                                    </p>
+                                </div>
+                                <div class="form-buttons">
+
+                                    <input type="submit" name="submit" class="button_register" value="Зарегистрироваться">
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+
+{% endblock %}

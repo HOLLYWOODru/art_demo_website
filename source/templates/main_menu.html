@@ -1,0 +1,76 @@
+{% load activeurl %}
+{% load assign_variable %}
+
+{% if not hierarhy_menu_support %}
+    {% assign hierarhy_menu_support 'yes' %}
+{% endif %}
+
+<div id='header' class="group">
+    <div id="header-img">
+        <div id='header-inner' class="group">
+            <div id="logo">
+                <a href="{% url 'home' %}">
+                </a>
+            </div>
+
+            {% activeurl menu=hierarhy_menu_support %}
+                <ul id="nav">
+                    {% for item in site_architecture.main_menu_structure %}
+
+                         <li class="horizontal-menu-item"><a href="{% url item.route_name %}">{{ item.title }}</a></li>
+
+                    {% endfor %}
+
+                    {% if user.is_authenticated %}
+
+                        {% if user.is_staff %}
+
+                            <li class="horizontal-menu-item right_align">
+                                <a id="username_menu_item" class="url" href="/admin">{{ user.username }}</a>
+                                <ul class="tabs" id="admin_tabs">
+                                    <li class="vertical-menu-item"><a class="url" href="/admin">{{ user.username }}</a></li>
+                                    <li></li>
+                                    <li class="vertical-menu-item"><a class="url" href="/logout">Выйти</a></li>
+                                </ul>
+                            </li>
+
+                        {% else %}
+
+                            <li class="horizontal-menu-item  right_align">
+                                <a class="url" href="/{{ user.username }}">
+                                    <img class="menu-user-avatar" src="{{ user.avatar_url }}">
+                                    <span class="menu-username">{{ user.username }}</span>
+                                </a>
+                                <ul class="tabs" id="artist_tabs">
+                                    <li class="vertical-menu-item">
+                                        <a href="{% url 'core.artist' user.username %}">
+                                            <img class="menu-user-avatar" src="{{ user.avatar_url }}">
+                                            <span class="menu-username2">{{ user.username }}</span>
+                                        </a>
+                                    </li>
+                                    <li></li>
+                                    <li class="vertical-menu-item"><a class="url" href="{% url 'core.artist' user.username %}">Творчество</a></li>
+                                    <li></li>
+                                    <li class="vertical-menu-item"><a class="url" href="{% url 'user.account.profile' %}">Профиль</a></li>
+                                    <li></li>
+                                    <li class="vertical-menu-item"><a class="url" href="/logout">Выйти</a></li>
+                                </ul>
+                            </li>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        {% for item in site_architecture.menu_for_not_logged_in_user %}
+
+                            <li class="horizontal-menu-item right_align"><a href="{% url item.route_name %}">{{ item.title }}</a></li>
+
+                        {% endfor %}
+
+                    {% endif %}
+                </ul>
+            {% endactiveurl %}
+
+        </div>
+    </div>
+</div>

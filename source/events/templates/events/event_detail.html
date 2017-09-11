@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>{{ event.name }}</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' with hierarhy_menu_support='no' %}
+
+    <div class="black-menu-area"></div>
+
+    <div id="wrap">
+
+        {% include 'sub_menu.html' with submenu_items=site_architecture.events_menu %}
+
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+
+                    <div class="event-information html-container">
+                        {{ event.html|safe }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+{% endblock %}

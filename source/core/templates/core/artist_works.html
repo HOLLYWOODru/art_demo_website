@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>{{ artist_works|length }} работ</title>
+
+    {% include 'gallery_head.html' %}
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' %}
+
+    <div class="black-menu-area"></div>
+
+    <div id="wrap">
+
+        {% include 'core/artist_menu.html' with artist=artist %}
+
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+
+                    {% include 'core/artist_information.html' with artist=artist %}
+
+                    {% if artist_works|length == 0 %}
+
+                        <p class="no-content">Пока не добавлено ни одной работы</p>
+
+                    {% else %}
+
+                        <ol class="works group">
+
+                            {% for work in artist_works %}
+                                {% include 'art/work_element.html' with without_artist_block=True %}
+                            {% endfor %}
+
+                        </ol>
+
+                    {% endif %}
+
+                    {% if is_paginated %}
+
+                        {% include 'pagination_controls.html' %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    {% include 'gallery_body.html' with works=artist_works %}
+
+{% endblock %}

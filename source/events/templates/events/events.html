@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>{{ events|length }} событий</title>
+
+{% endblock %}
+
+{% block body %}
+
+    {% include 'main_menu.html' %}
+
+    <div class="black-menu-area"></div>
+
+    <div id="wrap">
+
+        {% include 'sub_menu.html' with submenu_items=site_architecture.events_menu %}
+
+        <div id="wrap-inner">
+            <div id="content" class="group">
+                <div id="main" class="main-full">
+                    <span class="events-span-container">
+
+                        {% if events|length == 0 %}
+
+                            <p class="no-content">Пока не добалено ни одного события</p>
+
+                        {% else %}
+
+                                {% for event in events %}
+
+                                    {% include 'events/event_element.html' %}
+
+                                {% endfor %}
+
+                        {% endif %}
+
+                    </span>
+
+                    {% if is_paginated %}
+
+                        {% include 'pagination_controls.html' %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+{% endblock %}

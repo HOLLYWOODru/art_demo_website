@@ -1,0 +1,67 @@
+{% load staticfiles %}
+
+<div id="gallery_overlay" class="Modal absoluteCenter show" style="visibility: hidden;">
+    <div class="modalMask dark"></div>
+    <div class="modalContainer">
+        <div id="rg-gallery" class="rg-gallery">
+            <div class="gallery-close-button" onclick=hideGalleryOverlay()>
+            </div>
+            <div class="rg-thumbs">
+                <div class="es-carousel-wrapper">
+                    <div class="es-nav">
+                        <span class="es-nav-prev">Previous</span>
+                        <span class="es-nav-next">Next</span>
+                    </div>
+                    <div class="es-carousel">
+                        <ul>
+                            {%  for work in works %}
+                                <li id="{{ work.id }}">
+                                    <a href="#">
+                                        <div class="gallery-thumb-container">
+                                            <span class="gallery-thumb-span"></span>
+                                            <img src="{{ work.thumbnail_url }}" data-large="{{ work.image_url }}" alt="{{ work.name }}" />
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.tmpl.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.elastislide.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/gallery.js' %}"></script>
+
+<script>
+    function showGalleryOverlay(work_id) {
+
+        if(document.getElementById('gallery_overlay').style.visibility=='hidden') {
+
+            Gallery.showImage(work_id);
+
+            document.body.className += document.body.className ? ' noScroll' : 'noScroll';
+
+            document.getElementById('gallery_overlay').style.visibility='visible';
+            document.getElementById('gallery_overlay').style.opacity=1;
+        }
+    }
+
+    function hideGalleryOverlay() {
+        if(document.getElementById('gallery_overlay').style.visibility=='visible') {
+
+            document.getElementById('gallery_overlay').style.opacity=0;
+
+            setTimeout(function() {
+                document.body.className = document.body.className.replace(/noScroll/,'');
+                document.getElementById('gallery_overlay').style.visibility='hidden';
+
+            }, 200);
+        }
+    }
+</script>
